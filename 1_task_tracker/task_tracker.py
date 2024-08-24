@@ -1,6 +1,6 @@
 from model.task import Task
 import argparse
-from helper.handle_json import writeToJsonFile, appendToJsonFile,findTaskByIdAndUpdateDescription,findTaskByIdAndDelete,findTaskByIdAndUpdateStatus
+from helper.handle_json import writeToJsonFile,appendToJsonFile,findTaskByIdAndUpdateDescription,findTaskByIdAndDelete,findTaskByIdAndUpdateStatus,listTasks
 from os import path, stat
 import json
 
@@ -15,11 +15,11 @@ class TaskTrackerApp:
          parser.add_argument("--update",nargs=2)
          parser.add_argument("--delete",type=int)
          parser.add_argument("--mark_in_progress",nargs=1)
-         parser.add_argument("--mark-done",nargs=2)
+         parser.add_argument("--mark_done",nargs=1)
          parser.add_argument("--list",type=str)
-         parser.add_argument("--list-done",type=str)
-         parser.add_argument("--list-todo",type=str)
-         parser.add_argument('--list-in-progress',type=str)
+         parser.add_argument("--list_done",type=str)
+         parser.add_argument("--list_todo",type=str)
+         parser.add_argument('--list_in_progress',type=str)
 
          args = parser.parse_args()
          if args.add:
@@ -30,6 +30,16 @@ class TaskTrackerApp:
              self.delete(args.delete)
          elif args.mark_in_progress:
              self.markInProgress(int(args.mark_in_progress[0]))
+         elif args.mark_done:
+             self.markDone(int(args.mark_done[0]))
+         elif args.list and args.list == "tasks":
+             self.list()
+         elif args.list_done and args.list_done == "done":
+             self.listStatus(args.list_done)
+         elif args.list_todo and args.list_todo == "todo":
+             self.listStatus(args.list_todo)
+         elif args.list_in_progress and args.list_in_progress == "in_progress":
+             self.listStatus(args.list_in_progress)
              
 
 
@@ -79,6 +89,39 @@ class TaskTrackerApp:
                 updatedTasks = findTaskByIdAndUpdateStatus(json_tasks,id,"in_progress")
                 if(len(updatedTasks) > 0 ):
                     writeToJsonFile("data",updatedTasks)
+
+    def markDone(self,id):
+        if path.isfile(fileName) is False or stat("data.json") == 0:
+            print("Json data does not exist, try add a task")
+        else:
+             with open(fileName) as json_file:
+                json_tasks = json.load(json_file)
+                updatedTasks = findTaskByIdAndUpdateStatus(json_tasks,id,"done")
+                if(len(updatedTasks) > 0 ):
+                    writeToJsonFile("data",updatedTasks)
+
+
+    def list(self):
+        if path.isfile(fileName) is False or stat("data.json") == 0:
+            print("Json data does not exist, try add a task")
+        else:
+            with open(fileName) as json_file:
+                json_tasks = json.load(json_file)
+                listTasks(json_tasks,"tasks")
+
+    def listStatus(self,status):
+        if path.isfile(fileName) is False or stat("data.json") == 0:
+            print("Json data does not exist,try add a task")
+        else:
+            with open(fileName) as json_file:
+                json_tasks = json.load(json_file)
+                listTasks(json_tasks,status)
+   
+            
+
+
+
+    
                     
 
 
