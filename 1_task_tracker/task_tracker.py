@@ -1,6 +1,6 @@
 from model.task import Task
 import argparse
-from helper.handle_json import writeToJsonFile, appendToJsonFile,findTaskByIdAndUpdate
+from helper.handle_json import writeToJsonFile, appendToJsonFile,findTaskByIdAndUpdate,findTaskByIdAndDelete
 from os import path, stat
 import json
 
@@ -13,12 +13,21 @@ class TaskTrackerApp:
          parser = argparse.ArgumentParser()
          parser.add_argument("--add",type=str)
          parser.add_argument("--update",nargs=2)
+         parser.add_argument("--delete",type=int)
+         parser.add_argument("--mark-in-progress",nargs=2)
+         parser.add_argument("--mark-done",nargs=2)
+         parser.add_argument("--list",type=str)
+         parser.add_argument("--list-done",type=str)
+         parser.add_argument("--list-todo",type=str)
+         parser.add_argument('--list-in-progress',type=str)
+
          args = parser.parse_args()
          if args.add:
              self.add(args.add)
          elif args.update:
              self.update(int(args.update[0]),str(args.update[1]))
-         
+         elif args.delete:
+             self.delete(args.delete)
 
 
 
@@ -44,6 +53,33 @@ class TaskTrackerApp:
                 updatedTasks = findTaskByIdAndUpdate(json_tasks,id,description)
                 writeToJsonFile("data",updatedTasks)
 
+
+    def delete(self,id):
+        if path.isfile(fileName) is False or stat("data.json") == 0:
+            print("Json database does dont exist")
+        else:
+            with open(fileName) as json_file:
+                json_tasks = json.load(json_file)
+                updatedTasks = findTaskByIdAndDelete(json_tasks,id)
+                if(len(updatedTasks) > 0):
+                    writeToJsonFile("data",updatedTasks)
+                else:
+                    print("Cant find Task with id:" + id)
+
+
+    def markInProgress(self,id,status):
+        if path.isfile(fileName) is False or stat("data.json") == 0:
+            print("Json data does not exist, try add a task")
+        else:
+            with open(fileName) as json_file:
+                json_tasks = json.load(json_file)
+                updatedTasks = findTaskByIdAndUpdate(json_tasks,id,status)
+                if(len(updatedTasks) > 0 ):
+                    writeToJsonFile("data",updatedTasks)
+                    
+
+
+
     
 
 if __name__ == "__main__":
@@ -54,3 +90,4 @@ if __name__ == "__main__":
 
 
         
+
