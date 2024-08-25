@@ -1,15 +1,3 @@
-# My roadmap.sh backend solutions
-This repo was made for me to learn python by building the backend projects on roadmap.sh
-
-## Setting Up
-First, clone this repository
-<!-- start:code block -->
-# Clone this repository
-git clone https://github.com/sammelo2000/rh_backend_projects
-cd rh_backend_projects
-
-# Projects
-
 ## Task Tracker CLI
 Task Tracker CLI is command line tool that helps with managining and tracking of small tasks.
 
@@ -48,6 +36,3 @@ python task_tracker.py --list_todo "todo"
 python task_tracker.py --list_in_progress "in-porgress"
 
 ## Listing all tasks with done status
-
-
-<!-- end:code block -->
