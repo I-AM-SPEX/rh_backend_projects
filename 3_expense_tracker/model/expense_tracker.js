@@ -42,8 +42,29 @@ export class ExpenseTracker {
 
     }
 
-    delete() {
+    delete(id) {
+        try {
+            if (fs.existsSync(path)) {
+                const data = fs.readFileSync(path);
+                const expenses = JSON.parse(data);
+                const expenses_list = expenses.expenses;
+                const expenses_list_copy = [];
+                for (const expense of expenses_list) {
+                    if (Number(expense.id) === Number(id)) {
+                        continue;
+                    } else {
+                        expenses_list_copy.push(expense);
+                    }
+                }
+                expenses['expenses'] = expenses_list_copy;
+                const json_string = JSON.stringify(expenses);
+                fs.writeFileSync(path, json_string);
+                console.log(`Expense with (ID:${id}) deleted successfully.`);
 
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     list() {
@@ -54,11 +75,11 @@ export class ExpenseTracker {
                 const expenses_list = expenses.expenses;
                 console.log('ID     Date          Description     Amount     Category')
                 for (const expense of expenses_list) {
-                    console.log(`${expense.id}      ${expense.createdAt}     ${expense.description}            ${expense.amount}       ${expense.category || 'default'}`)
+                    console.log(`${expense.id}      ${expense.createdAt}     ${expense.description}         ${expense.amount}       ${expense.category || 'default'}`)
                 }
             } else {
                 console.log('No expenses found,Add an expense');
-               
+
 
             }
         } catch (error) {

@@ -34,7 +34,17 @@ program
 
 
     });
-program.command('delete');
+program
+.command('delete')
+.requiredOption('--id <id>','Delete by ID')
+.action(options => {
+    if(options.id) {
+        const app  = new ExpenseTracker();
+        app.delete(options.id);
+    }else{
+        console.log('Provide Expense ID');
+    }
+});
 
 
 
