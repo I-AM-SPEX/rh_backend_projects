@@ -39,7 +39,7 @@ export class ExpenseTracker {
     }
 
     update() {
-       
+
     }
 
     delete() {
@@ -47,22 +47,38 @@ export class ExpenseTracker {
     }
 
     list() {
+        try {
+            if (fs.existsSync(path)) {
+                const data = fs.readFileSync(path);
+                const expenses = JSON.parse(data);
+                const expenses_list = expenses.expenses;
+                console.log('ID     Date          Description     Amount     Category')
+                for (const expense of expenses_list) {
+                    console.log(`${expense.id}      ${expense.createdAt}     ${expense.description}            ${expense.amount}       ${expense.category || 'default'}`)
+                }
+            } else {
+                console.log('No expenses found,Add an expense');
+               
 
+            }
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     summary() {
         try {
-            if(fs.existsSync(path)) {
+            if (fs.existsSync(path)) {
                 let sum = 0;
                 const data = fs.readFileSync(path);
                 const expenses = JSON.parse(data);
                 const expenses_list = expenses.expenses;
-                for(const expense of expenses_list) {
+                for (const expense of expenses_list) {
                     const amount = expense.amount.split('$')[1];
-                    sum+= Number(amount);
+                    sum += Number(amount);
                 }
                 console.log(`Total expenses: $${sum}`);
-            }else {
+            } else {
                 console.log('No expenses found,Add an expense');
             }
         } catch (error) {
@@ -72,23 +88,23 @@ export class ExpenseTracker {
 
     summaryByMonth(month) {
         try {
-            if(fs.existsSync(path)) {
+            if (fs.existsSync(path)) {
                 let sum = 0;
                 const data = fs.readFileSync(path);
                 const expenses = JSON.parse(data);
                 const expenses_list = expenses.expenses;
-                for(const expense of expenses_list) {
-                    if(expense.createdAt.split('/')[0] == month) {
+                for (const expense of expenses_list) {
+                    if (expense.createdAt.split('/')[0] == month) {
                         const amount = expense.amount.split('$')[1];
-                        sum+= Number(amount);
+                        sum += Number(amount);
                     }
-                    
+
                 }
                 console.log(`Total expenses: $${sum}`);
-            }else {
+            } else {
                 console.log('No expenses found,Add an expense');
             }
-        }catch(error){
+        } catch (error) {
             console.error(error);
         }
     }
