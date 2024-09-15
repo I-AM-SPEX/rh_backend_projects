@@ -14,14 +14,11 @@ export class ExpenseTracker {
             if (fs.existsSync(path)) {
                 const data = fs.readFileSync(path);
                 const expenses = JSON.parse(data);
-                console.log(expenses)
                 expense.setId(expenses.expenses.length + 1);
                 expenses.expenses.push(expense);
-                console.log(expenses);
-
                 const json_string = JSON.stringify(expenses);
                 fs.writeFileSync(path, json_string);
-
+                console.log(`Expense added Succesfully (ID: ${expense.getId()})`);
 
 
 
@@ -31,6 +28,8 @@ export class ExpenseTracker {
                 data.expenses.push(expense);
                 const json_string = JSON.stringify(data);
                 fs.writeFileSync(path, json_string);
+                console.log(`Expense added Succesfully (ID: ${expense.getId()})`);
+
 
             }
         } catch (error) {
@@ -40,7 +39,7 @@ export class ExpenseTracker {
     }
 
     update() {
-
+       
     }
 
     delete() {
@@ -52,6 +51,22 @@ export class ExpenseTracker {
     }
 
     summary() {
-
+        try {
+            if(fs.existsSync(path)) {
+                let sum = 0;
+                const data = fs.readFileSync(path);
+                const expenses = JSON.parse(data);
+                const expenses_list = expenses.expenses;
+                for(const expense of expenses_list) {
+                    const amount = expense.amount.split('$')[1];
+                    sum+= Number(amount);
+                }
+                console.log(`Total expenses: $${sum}`);
+            }else {
+                console.log('No expenses found,Add an expense');
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
