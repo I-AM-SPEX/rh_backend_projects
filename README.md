@@ -1,5 +1,5 @@
 # My roadmap.sh backend solutions
-This repo was made for me to learn python by building the backend projects on roadmap.sh
+This repo was made for me to learn python and solidify my javascript understandng by building the backend projects on roadmap.sh
 
 ## Setting Up
 First, clone this repository
