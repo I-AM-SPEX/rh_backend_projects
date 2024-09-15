@@ -69,4 +69,27 @@ export class ExpenseTracker {
             console.error(error);
         }
     }
+
+    summaryByMonth(month) {
+        try {
+            if(fs.existsSync(path)) {
+                let sum = 0;
+                const data = fs.readFileSync(path);
+                const expenses = JSON.parse(data);
+                const expenses_list = expenses.expenses;
+                for(const expense of expenses_list) {
+                    if(expense.createdAt.split('/')[0] == month) {
+                        const amount = expense.amount.split('$')[1];
+                        sum+= Number(amount);
+                    }
+                    
+                }
+                console.log(`Total expenses: $${sum}`);
+            }else {
+                console.log('No expenses found,Add an expense');
+            }
+        }catch(error){
+            console.error(error);
+        }
+    }
 }
