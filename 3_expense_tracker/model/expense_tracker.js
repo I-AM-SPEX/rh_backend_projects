@@ -129,4 +129,39 @@ export class ExpenseTracker {
             console.error(error);
         }
     }
+
+    addCategory(id,category) {
+        try {
+            let condition = false;
+            if(fs.existsSync(path)) {
+                const data = fs.readFileSync(path);
+                const expenses = JSON.parse(data);
+                const expenses_list = expenses.expenses;
+                const expenses_list_copy = [];
+                for(const expense of expenses_list) {
+                    if(Number(expense.id) === Number(id)) {
+                        expense['category'] = category
+                        expenses_list_copy.push(expense);
+                        condition = true;
+                    }else {
+                        expenses_list_copy.push(expense);
+                    }
+
+                }
+                expenses['expenses'] = expenses_list_copy;
+                const json_string = JSON.stringify(expenses);
+                fs.writeFileSync(path, json_string);
+                if(condition) {
+                    console.log(`Category added successfully to Expense with (ID:${id})`);
+                }else {
+                    console.log(`Expense with (ID:${id}) not found.`);
+                }
+            }else {
+                console.log('No expenses found,Add an expense');
+
+            }
+        } catch (error) {
+            
+        }
+    }
 }

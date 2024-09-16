@@ -35,16 +35,30 @@ program
 
     });
 program
-.command('delete')
-.requiredOption('--id <id>','Delete by ID')
-.action(options => {
-    if(options.id) {
-        const app  = new ExpenseTracker();
-        app.delete(options.id);
-    }else{
-        console.log('Provide Expense ID');
-    }
-});
+    .command('delete')
+    .requiredOption('--id <id>', 'Delete by ID')
+    .action(options => {
+        if (options.id) {
+            const app = new ExpenseTracker();
+            app.delete(options.id);
+        } else {
+            console.log('Provide Expense ID');
+        }
+    });
+
+program
+    .command('category')
+    .requiredOption('--type <type>', 'Add category')
+    .requiredOption('--id <id>', 'get expense by id')
+    .action(options => {
+        if (options.type && options.id) {
+
+            const app = new ExpenseTracker();
+            app.addCategory(options.id, options.type);
+        } else {
+            console.log("Provide Requeired Aguments");
+        }
+    })
 
 
 
