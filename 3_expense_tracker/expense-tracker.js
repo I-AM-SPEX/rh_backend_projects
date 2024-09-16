@@ -66,6 +66,16 @@ program
         }
     })
 
+program
+    .command('export')
+    .option('--type <type>')
+    .action((options) => {
+        if(options.type.toString() === 'csv') {
+            const app = new ExpenseTracker();
+            app.exportAsCsv();
+        }
+    })
+
 
 
 program.parse(process.argv);

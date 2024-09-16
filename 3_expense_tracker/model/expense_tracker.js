@@ -1,6 +1,7 @@
 import fs from 'fs'
-import { escape } from 'querystring';
-
+import * as systemPath from 'path';
+import csvWriter from 'csv-writer';
+import { title } from 'process';
 const path = 'expenses.json'
 
 export class ExpenseTracker {
@@ -183,6 +184,33 @@ export class ExpenseTracker {
             }else {
                 console.log('No expenses found,Add an expense');
 
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    exportAsCsv() {
+        try {
+            if(fs.existsSync(path)){
+                const data = fs.readFileSync(path);
+                const expenses = JSON.parse(data);
+                const expenses_list = expenses.expenses;
+                const writer = csvWriter.createObjectCsvWriter({
+                    path: 'expenses.csv',
+                    header:[
+                        {id:'id',title:'ID'},
+                        {id:'createdAt',title:'Date'},
+                        {id:'description',title:'Description'},
+                        {id:'amount',title:'Amount'},
+                        {id:'category',title:'Category'}
+                    ]
+                });
+                writer.writeRecords(expenses_list)
+                .then(() => {
+                    console.log('Csv file exported');
+                })
+              
             }
         } catch (error) {
             console.error(error);
