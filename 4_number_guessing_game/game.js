@@ -1,4 +1,7 @@
 import PromptSync from "prompt-sync";
+import fs from 'fs'
+
+const path = 'high_score.json';
 export class NumberGuessingGame {
     constructor() {
         this.randomNumber;
@@ -11,6 +14,16 @@ export class NumberGuessingGame {
         console.log('Welcome to the Number Guessing Game!');
         console.log('I\'m thinking of a number between 1 and 100.');
         console.log('The Number of chances you get is based on the difficulty selected');
+        if(!fs.existsSync(path)) {
+            const scores = {
+                Hard : "nill",
+                Medium: "nill",
+                Easy: "nill",
+            }
+
+            const json_string = JSON.stringify(scores);
+            fs.writeFileSync(path,json_string);
+        }
     }
 
     selectDifficulty() {
@@ -77,6 +90,9 @@ export class NumberGuessingGame {
         }
         if(won) {
             const finalAttempts = this.attempts;
+            const data = fs.readFileSync(path)
+            const highScores = JSON.parse(data);
+            
             this.resetAttempts();
         }else {
             this.resetAttempts();
