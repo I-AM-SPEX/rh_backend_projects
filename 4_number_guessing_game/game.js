@@ -1,9 +1,10 @@
 import PromptSync from "prompt-sync";
 export class NumberGuessingGame {
-    constructor () {
-        this.number;
+    constructor() {
+        this.randomNumber;
         this.chances;
         this.difficulty;
+        this.attempts = 0;
     }
 
     welcome() {
@@ -12,33 +13,58 @@ export class NumberGuessingGame {
         console.log('The Number of chances you get is based on the difficulty selected');
     }
 
-    async selectDifficulty() {
+    selectDifficulty() {
         try {
             console.log('Please select the difficulty level');
             console.log('1. Easy (10 chances)');
             console.log('2. Medium (5 chances)');
             console.log('3. Hard (3 chances)');
             const prompt = new PromptSync();
-            const choice =  prompt("Enter you choice:  ");
-            console.log(choice)
+            const choice = Number(prompt("Enter you choice: "));
+            this.setChances(choice);
+            console.log(`Great! You have selected the ${this.difficulty} difficulty level.`);
+            this.startGame();
         } catch (error) {
             console.log(error)
         }
-      
+
     }
 
     setChances(difficulty) {
-        switch(difficulty) {
+        switch (difficulty) {
             case 1:
-                this.difficulty = 10;
+                this.difficulty = 'Easy';
+                this.chances = 10;
                 break;
             case 2:
-                this.difficulty = 5;
+                this.difficulty = 'Medium';
+                this.chances = 5;
                 break;
             case 3:
-                this.difficulty = 3;
+                this.difficulty = 'Hard';
+                this.chances = 3;
                 break;
+            default:
+                console.log('Invlaid option selected');
+                console.log('Game Quited')
+                process.exit(0);
+                
+
         }
     }
+    startGame() {
+
+        console.log('Lets start the game');
+        this.randomNumber = Math.floor(Math.random() * 100) + 1;
+        console.log('the random number',this.randomNumber)
+        // this.guessNumber(this.chances)
+    }
+    guessNumber(chances) {
+        while(this.attempts < chances) {
+
+        }
+    }
+
+
 
 }
