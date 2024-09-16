@@ -16,9 +16,15 @@ program
     })
 program.
     command('list')
-    .action(() => {
-        const app = new ExpenseTracker();
-        app.list();
+    .option('--category <category>', 'filter by category')
+    .action((options) => {
+        if (options.category) {
+            const app = new ExpenseTracker();
+            app.filterByCategory(options.category);
+        } else {
+            const app = new ExpenseTracker();
+            app.list();
+        }
     });
 program
     .command('summary')
