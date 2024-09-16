@@ -73,7 +73,7 @@ export class ExpenseTracker {
                 const data = fs.readFileSync(path);
                 const expenses = JSON.parse(data);
                 const expenses_list = expenses.expenses;
-                console.log('ID     Date          Description     Amount     Category')
+                console.log('ID     Date          Description     Amount     Category');
                 for (const expense of expenses_list) {
                     console.log(`${expense.id}      ${expense.createdAt}     ${expense.description}         ${expense.amount}       ${expense.category || 'default'}`)
                 }
@@ -161,7 +161,31 @@ export class ExpenseTracker {
 
             }
         } catch (error) {
-            
+            console.error(error);
+        }
+    }
+
+    filterByCategory(category) {
+        try {
+            if(fs.existsSync(path)) {
+                const data = fs.readFileSync(path);
+                const expenses = JSON.parse(data);
+                const expenses_list = expenses.expenses;
+                console.log('ID     Date          Description     Amount     Category');
+
+                for(const expense of expenses_list) {
+                    if(expense.category === category) {
+                        console.log(`${expense.id}      ${expense.createdAt}     ${expense.description}         ${expense.amount}       ${expense.category || 'default'}`)
+
+                    }
+                }
+
+            }else {
+                console.log('No expenses found,Add an expense');
+
+            }
+        } catch (error) {
+            console.error(error);
         }
     }
 }
