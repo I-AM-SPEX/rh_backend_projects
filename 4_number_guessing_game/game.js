@@ -56,13 +56,54 @@ export class NumberGuessingGame {
 
         console.log('Lets start the game');
         this.randomNumber = Math.floor(Math.random() * 100) + 1;
-        console.log('the random number',this.randomNumber)
-        // this.guessNumber(this.chances)
+        console.log('the random number',this.randomNumber);
+        this.guessNumber(this.chances)
     }
     guessNumber(chances) {
+        let won = false;
+        const prompt = new PromptSync();
         while(this.attempts < chances) {
+            console.log(`Current Attempts: ${this.attempts}`);
+            const guess = Number(prompt("Enter your guess: "))
+            if(guess ===  this.randomNumber) {
+                won = true
+                break;
+            }else {
+                console.log(`Incorrect! The number is ${(this.randomNumber > guess)? `greater than ${guess}`:`less than ${guess}` }`);
+            }
 
+            this.increaseAttempt();
+            
         }
+        if(won) {
+            const finalAttempts = this.attempts;
+            this.resetAttempts();
+        }else {
+            this.resetAttempts();
+            console.log('You lost the correct number is', this.randomNumber);
+            console.log('Play again');
+            console.log('1. Yes');
+            console.log('2. No');
+            const response = Number(prompt("Enter choice: "));
+            if(response == 1) {
+                this.selectDifficulty();
+            }else {
+                return;
+            }
+        }
+
+    }
+
+    increaseAttempt() {
+        this.attempts = this.attempts + 1;
+    }
+
+    wonGame() {
+
+    }
+
+    resetAttempts() {
+        this.attempts = 0;
     }
 
 
