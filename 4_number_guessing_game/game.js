@@ -14,15 +14,15 @@ export class NumberGuessingGame {
         console.log('Welcome to the Number Guessing Game!');
         console.log('I\'m thinking of a number between 1 and 100.');
         console.log('The Number of chances you get is based on the difficulty selected');
-        if(!fs.existsSync(path)) {
+        if (!fs.existsSync(path)) {
             const scores = {
-                Hard : "nill",
+                Hard: "nill",
                 Medium: "nill",
                 Easy: "nill",
             }
 
             const json_string = JSON.stringify(scores);
-            fs.writeFileSync(path,json_string);
+            fs.writeFileSync(path, json_string);
         }
     }
 
@@ -61,7 +61,7 @@ export class NumberGuessingGame {
                 console.log('Invlaid option selected');
                 console.log('Game Quited')
                 process.exit(0);
-                
+
 
         }
     }
@@ -69,41 +69,50 @@ export class NumberGuessingGame {
 
         console.log('Lets start the game');
         this.randomNumber = Math.floor(Math.random() * 100) + 1;
-        console.log('the random number',this.randomNumber);
+        console.log('the random number', this.randomNumber);
         this.guessNumber(this.chances)
     }
     guessNumber(chances) {
         let won = false;
         const prompt = new PromptSync();
-        while(this.attempts < chances) {
+        while (this.attempts < chances) {
             console.log(`Current Attempts: ${this.attempts}`);
             const guess = Number(prompt("Enter your guess: "))
-            if(guess ===  this.randomNumber) {
+            if (guess === this.randomNumber) {
                 won = true
+                this.increaseAttempt();
                 break;
-            }else {
-                console.log(`Incorrect! The number is ${(this.randomNumber > guess)? `greater than ${guess}`:`less than ${guess}` }`);
+            } else {
+                console.log(`Incorrect! The number is ${(this.randomNumber > guess) ? `greater than ${guess}` : `less than ${guess}`}`);
             }
 
             this.increaseAttempt();
-            
+
         }
-        if(won) {
+        if (won) {
+            console.log(`Congratulations! You guessed the correct number in ${this.attempts} attempts.`);
             const finalAttempts = this.attempts;
-            const data = fs.readFileSync(path)
-            const highScores = JSON.parse(data);
-            
+            this.wonGame(finalAttempts);
             this.resetAttempts();
-        }else {
-            this.resetAttempts();
-            console.log('You lost the correct number is', this.randomNumber);
             console.log('Play again');
             console.log('1. Yes');
             console.log('2. No');
             const response = Number(prompt("Enter choice: "));
-            if(response == 1) {
+            if (response == 1) {
                 this.selectDifficulty();
-            }else {
+            } else {
+                return;
+            }
+        } else {
+            this.resetAttempts();
+            console.log('You lost the correct number was', this.randomNumber);
+            console.log('Play again');
+            console.log('1. Yes');
+            console.log('2. No');
+            const response = Number(prompt("Enter choice: "));
+            if (response == 1) {
+                this.selectDifficulty();
+            } else {
                 return;
             }
         }
@@ -114,7 +123,20 @@ export class NumberGuessingGame {
         this.attempts = this.attempts + 1;
     }
 
-    wonGame() {
+    wonGame(attempts) {
+
+        const data = fs.readFileSync(path)
+        const highScores = JSON.parse(data);
+        if (highScores[this.difficulty] !== 'nill') {
+            if (attempts < highScores[this.difficulty]) {
+                highScores[this.difficulty] = attempts;
+                console.log(`New High Score: ${attempts} attempts for ${this.difficulty} difficulty level`);
+            };
+        } else {
+            highScores[this.difficulty] = attempts;
+        }
+        const json_string = JSON.stringify(highScores);
+        fs.writeFileSync(path, json_string);
 
     }
 
