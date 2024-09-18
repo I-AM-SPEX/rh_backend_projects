@@ -1,5 +1,6 @@
 import PromptSync from "prompt-sync";
 import fs from 'fs'
+import { timeDistance } from "./helper.js";
 
 const path = 'high_score.json';
 export class NumberGuessingGame {
@@ -69,12 +70,12 @@ export class NumberGuessingGame {
 
         console.log('Lets start the game');
         this.randomNumber = Math.floor(Math.random() * 100) + 1;
-        console.log('the random number', this.randomNumber);
         this.guessNumber(this.chances)
     }
     guessNumber(chances) {
         let won = false;
         const prompt = new PromptSync();
+        console.time('Time Taken')
         while (this.attempts < chances) {
             console.log(`Current Attempts: ${this.attempts}`);
             const guess = Number(prompt("Enter your guess: "))
@@ -89,6 +90,7 @@ export class NumberGuessingGame {
             this.increaseAttempt();
 
         }
+        console.timeEnd('Time Taken')
         if (won) {
             console.log(`Congratulations! You guessed the correct number in ${this.attempts} attempts.`);
             const finalAttempts = this.attempts;
