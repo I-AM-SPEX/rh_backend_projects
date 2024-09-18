@@ -146,6 +146,10 @@ export class NumberGuessingGame {
         this.attempts = 0;
     }
 
+    gameOver() {
+        console.log("Gane over....")
+    }
+
 
 
 }
