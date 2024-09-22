@@ -113,6 +113,14 @@ const convertFromKillometer = (data) => {
             result = value  * 39370;
             break;
         case 'foot':
-            result = value  * 
+            result = value  * 3218;
+            break;
+        case 'yd':
+            result = value * 1094;
+            break;
+        case 'mi':
+            result = value / 1.609
     }
+    console.log(result);
+    console.log('killometer to');
 } 
