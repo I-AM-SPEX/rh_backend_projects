@@ -124,3 +124,10 @@ const convertFromKillometer = (data) => {
     console.log(result);
     console.log('killometer to');
 } 
+
+
+const convertFromInch = (data) => {
+    
+}
+
+
