@@ -192,7 +192,7 @@ const convertFromFoot = (data) => {
 }
 
 
-const covertFromYard = (data) => {
+const convertFromYard = (data) => {
     const unit = data.unit;
     const value = Number(data.value);
     let result = '';
