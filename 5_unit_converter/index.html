@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Length Conversion</title>
+   
 </head>
 <body>
     <header>
@@ -17,18 +18,15 @@
         </ul>
     </nav>
     <section>
+        <p id="sam"></p>
+
         <form action="">
             <label for="length">Enter the length to convert to</label><br/>
             <input type="text" id="length" name="length"><br/>
             <label for="unit_from">Unit to convert from</label><br/>
             <select name="unit_from" id="unit_from">
-                <option value="mm">Millimeter (mm)</option>
-                <option value="cm">Centimeter (cm)</option>
-                <option value="km">Kilometer (km)</option>
-                <option value="in">Inch (in)</option>
-                <option value="ft">Foot (ft)</option>
-                <option value="yd">Yard (yd)</option>
-                <option value="mi">Mile (mi)</option>
+            
+               
             </select><br/>
             <label for="unit_to">Unit to convert to</label><br/>
             <select name="unit_to" id="unit_to">
@@ -40,8 +38,57 @@
                 <option value="yd">Yard (yd)</option>
                 <option value="mi">Mile (mi)</option>
             </select><br/>
+
             <button type="submit">Convert</button>
         </form>
     </section>
 </body>
+<script>
+    let units = [
+        {
+            text: 'mm',
+            value: 'mm',
+            selected: true
+        },
+        {
+            text:'cm',
+            value:'cm'
+        },
+        {
+            text:'m',
+            value:'m'
+        },
+        {
+            text:'km',
+            value:'km'
+        },
+        {
+            text:'in',
+            value:'in'
+        },
+        {
+            text:'ft',
+            value:'ft'
+        },
+        {
+            text:'yd',
+            value:'yd'
+        },
+        {
+            text:'mi',
+            value:'mi'
+        }
+    ];
+
+    const unit_from_list = document.getElementById("unit_from").options;
+    units.forEach(unit => {
+        unit_from_list.add(
+            new Option(unit.text,unit.value,unit.selected)
+        )
+    })
+
+   
+
+   
+</script>
 </html>
