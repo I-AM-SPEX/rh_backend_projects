@@ -224,3 +224,35 @@ const convertFromYard = (data) => {
 }
 
 
+
+const convertFromMile = (data) => {
+    const unit = data.unit;
+    const value = Number(data.value);
+    let result = '';
+
+    switch(unit) {
+        case 'mm':
+            result = value * 1609344;
+            break;
+        case 'cm':
+            result = value * 160900;
+            break;
+        case 'km':
+            result = value * 1.609;
+            break;
+        case 'in':
+            result = value * 63360;
+            break;
+        case 'foot':
+            result = value * 5280;
+            break;
+        case 'yd':
+            result = value * 1760;
+            break;
+
+    }
+
+    console.log(result);
+    console.log('miles to');
+}
+
