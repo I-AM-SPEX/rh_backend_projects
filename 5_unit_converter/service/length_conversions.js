@@ -161,3 +161,34 @@ const convertFromInch = (data) => {
 }
 
 
+const convertFromFoot = (data) => {
+    const unit = data.unit;
+    const value = Number(data.value);
+    let result = '';
+
+    switch(unit) {
+        case 'mm':
+            result = value * 305.8;
+            break;
+        case 'cm':
+            result = value * 30.48;
+            break;
+        case 'km':
+            result = value / 3281;
+            break;
+        case 'in':
+            result = value * 12;
+            break;
+        case 'yd':
+            result = value / 3;
+            break;
+        case 'mi':
+            result = value / 5280;
+            break;
+    }
+
+    console.log(result);
+    console.log('foot to');
+}
+
+
