@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Length Conversion</title>
-   
+
 </head>
+
 <body>
     <header>
         <h1>Unit Conversion</h1>
@@ -21,29 +23,44 @@
         <p id="sam"></p>
 
         <form action="">
-            <label for="length">Enter the length to convert to</label><br/>
-            <input type="text" id="length" name="length"><br/>
-            <label for="unit_from">Unit to convert from</label><br/>
-            <select name="unit_from" id="unit_from">
-            
-               
-            </select><br/>
-            <label for="unit_to">Unit to convert to</label><br/>
-            <select name="unit_to" id="unit_to">
-                <option value="mm">Millimeter (mm)</option>
-                <option value="cm">Centimeter (cm)</option>
-                <option value="km">Kilometer (km)</option>
-                <option value="in">Inch (in)</option>
-                <option value="ft">Foot (ft)</option>
-                <option value="yd">Yard (yd)</option>
-                <option value="mi">Mile (mi)</option>
-            </select><br/>
+            <label for="length">Enter the length to convert to</label><br />
+            <input type="text" id="length" name="length"><br />
+            <label for="unit_from">Unit to convert from</label><br />
+            <select name="unit_from" id="unit_from" onchange="onChangeUnitFrom();">
+
+
+            </select><br />
+            <label for="unit_to">Unit to convert to</label><br />
+            <select name="unit_to" id="unit_to" onchange="onChangeUnitTo();">
+
+            </select><br />
 
             <button type="submit">Convert</button>
         </form>
     </section>
 </body>
-<script>
+<script type="text/javascript">
+
+    const onChangeUnitFrom = () => {
+        console.log('From is changing');
+        unit_to_list_options.length = 0;
+        units_to_elements.forEach(unit => {
+            unit_to_list_options.add(
+                new Option(unit.text, unit.value, unit.selected)
+            )
+        })
+
+
+
+    }
+
+    const onChangeUnitTo = () => {
+        console.log('To is changing');
+
+    }
+
+
+
     let units = [
         {
             text: 'mm',
@@ -51,44 +68,63 @@
             selected: true
         },
         {
-            text:'cm',
-            value:'cm'
+            text: 'cm',
+            value: 'cm'
         },
         {
-            text:'m',
-            value:'m'
+            text: 'm',
+            value: 'm'
         },
         {
-            text:'km',
-            value:'km'
+            text: 'km',
+            value: 'km'
         },
         {
-            text:'in',
-            value:'in'
+            text: 'in',
+            value: 'in'
         },
         {
-            text:'ft',
-            value:'ft'
+            text: 'ft',
+            value: 'ft'
         },
         {
-            text:'yd',
-            value:'yd'
+            text: 'yd',
+            value: 'yd'
         },
         {
-            text:'mi',
-            value:'mi'
+            text: 'mi',
+            value: 'mi'
         }
     ];
 
-    const unit_from_list = document.getElementById("unit_from").options;
-    units.forEach(unit => {
-        unit_from_list.add(
-            new Option(unit.text,unit.value,unit.selected)
+    let units_from_elements = [...units];
+    let units_to_elements = [];
+    const unit_from_list = document.getElementById('unit_from');
+    const unit_from_list_options = document.getElementById("unit_from").options;
+    const unit_to_list = document.getElementById('unit_to');
+    const unit_to_list_options = document.getElementById("unit_to").options;
+
+
+    units_from_elements.forEach(unit => {
+        unit_from_list_options.add(
+            new Option(unit.text, unit.value, unit.selected)
         )
     })
 
-   
+    units_to_elements = units_from_elements.filter(units => units.value != unit_from_list.value);
 
-   
+    units_to_elements.forEach(unit => {
+        unit_to_list_options.add(
+            new Option(unit.text, unit.value, unit.selected)
+        )
+    })
+
+
+
+
+
+
+
 </script>
+
 </html>
