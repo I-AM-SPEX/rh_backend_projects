@@ -42,7 +42,6 @@
 <script type="text/javascript">
 
     const onChangeUnitFrom = () => {
-        console.log('From is changing');
         unit_to_list_options.length = 0;
 
         units_to_elements = units.filter(unit => unit.value != unit_from_list.value);
@@ -58,7 +57,6 @@
     }
 
     const onChangeUnitTo = () => {
-        console.log('To is changing');
         unit_from_list_options.length = 0;
 
         units_from_elements = units.filter(unit => unit.value != unit_to_list.value);
@@ -68,7 +66,6 @@
                 new Option(unit.text, unit.value, unit.selected)
             )
         })
-
 
     }
 
