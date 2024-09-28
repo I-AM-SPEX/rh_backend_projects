@@ -119,7 +119,9 @@ const convertFromKillometer = (data) => {
             result = value * 1094;
             break;
         case 'mi':
-            result = value / 1.609
+            result = value / 1.609;
+            break;
+
     }
     console.log(result);
     console.log('killometer to');
@@ -127,7 +129,35 @@ const convertFromKillometer = (data) => {
 
 
 const convertFromInch = (data) => {
-    
+    const unit = date.unit;
+    const value = Number(data.value);
+    let result = '';
+
+    switch(unit) {
+        case 'mm':
+            result = value * 25.4;
+            break;
+        case 'cm':
+            result = value * 2.54;
+            break;
+        case 'km':
+            result = value /  39370;
+            break;
+        case 'foot':
+            result = value / 12;
+            break;
+        case 'yd':
+            result = value /36;
+            break;
+        case 'mi':
+            result = value / 63360;
+            break;
+
+
+    }
+
+    console.log(result);
+    console.log('inch to');
 }
 
 
