@@ -192,3 +192,35 @@ const convertFromFoot = (data) => {
 }
 
 
+const covertFromYard = (data) => {
+    const unit = data.unit;
+    const value = Number(data.value);
+    let result = '';
+
+    switch(unit) {
+        case 'mm':
+            result = value * 914.4;
+            break;
+        case 'cm':
+            result = value * 91.44;
+            break;
+        case 'km':
+            result = value * 1094;
+            break;
+        case 'in':
+            result = value * 36;
+            break;
+        case 'foot':
+            result = value * 3;
+            break;
+        case 'mi':
+            result = value / 1760;
+            break;
+
+    }
+
+    console.log(result);
+    console.log('yard to');
+}
+
+
